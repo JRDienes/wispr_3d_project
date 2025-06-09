@@ -33,7 +33,7 @@ def normalize_data(data):
     norm = np.clip(norm, 0, 1)
     return norm
 
-def create_time_series_visualization(fits_files, output_path, num_frames=180):
+def create_time_series_visualization(fits_files, output_path, num_frames=60):
     """
     Create a time-series 3D spherical visualization of the WISPR images.
     
@@ -89,19 +89,18 @@ def create_time_series_visualization(fits_files, output_path, num_frames=180):
     # Set the initial view
     ax.view_init(elev=30, azim=0)
     
-    # Store the surface so we can remove it
-    surface = [None]
+    # Store frames for GIF
+    frames = []
     
-    # Create animation
-    def update(frame):
-        # Remove previous surface
-        if surface[0] is not None:
-            surface[0].remove()
-        
+    # Create frames
+    for i in range(num_frames):
         # Calculate which data point to show
-        data_idx = int((frame / num_frames) * len(data_series))
+        data_idx = int((i / num_frames) * len(data_series))
         if data_idx >= len(data_series):
             data_idx = len(data_series) - 1
+        
+        # Clear previous plot
+        ax.clear()
         
         # Prepare data
         normalized_data = normalize_data(data_series[data_idx])
@@ -113,22 +112,28 @@ def create_time_series_visualization(fits_files, output_path, num_frames=180):
         colors = cmap(smoothed_data)
         colors = np.ascontiguousarray(colors, dtype=np.float32)
         
-        # Plot new surface
-        surface[0] = ax.plot_surface(x, y, z, facecolors=colors, rcount=100, ccount=100, linewidth=0, antialiased=True)
+        # Plot surface
+        ax.plot_surface(x, y, z, facecolors=colors, rcount=100, ccount=100, linewidth=0, antialiased=True)
         
         # Update the title with the time
-        title.set_text(f'WISPR Spherical Visualization\nTime: {times[data_idx].strftime("%Y-%m-%d %H:%M:%S")}')
+        ax.set_title(f'WISPR Spherical Visualization\nTime: {times[data_idx].strftime("%Y-%m-%d %H:%M:%S")}')
         
-        # Keep the view fixed
+        # Set labels and view
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+        ax.set_box_aspect([1,1,1])
         ax.view_init(elev=30, azim=0)
-        return fig,
+        
+        # Convert plot to image
+        fig.canvas.draw()
+        frame = np.array(fig.canvas.renderer.buffer_rgba())
+        frames.append(frame)
     
-    anim = FuncAnimation(fig, update, frames=np.linspace(0, 360, num_frames),
-                        interval=50, blit=True)
-    
-    # Save as GIF
-    anim.save(output_path, writer='pillow', fps=30)
     plt.close()
+    
+    # Save frames as GIF
+    imageio.mimsave(output_path, frames, fps=20, loop=0)
 
 def main():
     # Create output directory if it doesn't exist
@@ -151,7 +156,7 @@ def main():
     
     try:
         # Create the time-series visualization
-        create_time_series_visualization(fits_files, output_gif)
+        create_time_series_visualization(fits_files, output_gif, num_frames=60)
         print(f"Visualization saved to {output_gif}")
         print(f"Processed {len(fits_files)} FITS files")
         

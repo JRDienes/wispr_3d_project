@@ -1,0 +1,39 @@
+.app {
+    display: flex;
+    height: 100vh;
+    background: #000;
+}
+
+.visualization {
+    flex: 1;
+    position: relative;
+}
+
+.timeline {
+    width: 300px;
+    border-left: 1px solid #333;
+}
+
+/* Loading state */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffd700;
+    font-size: 1.2em;
+}
+
+/* Error state */
+.error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff4444;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+} 

@@ -1,0 +1,68 @@
+.timeline {
+    padding: 20px;
+    background: #1a1a1a;
+    color: white;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline h2 {
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+.timeline-events {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.timeline-event {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #2a2a2a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timeline-event:hover {
+    background: #3a3a3a;
+    transform: translateX(5px);
+}
+
+.timeline-event.selected {
+    background: #3a3a3a;
+    border-left: 4px solid #ffd700;
+}
+
+.event-preview {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.event-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-info {
+    flex: 1;
+}
+
+.event-info h3 {
+    margin: 0 0 5px 0;
+    color: #ffd700;
+}
+
+.event-info p {
+    margin: 0;
+    color: #ccc;
+    font-size: 0.9em;
+} 

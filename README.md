@@ -1,15 +1,34 @@
-# WISPR 3D Visualization
+# WISPR 3D Visualization Project
 
-This project creates 3D rotating visualizations from NASA Parker Solar Probe WISPR FITS images.
+This project creates a 3D spherical visualization of NASA's Parker Solar Probe WISPR (Wide-field Imager for Solar Probe) images. The visualization shows the time evolution of the WISPR data in a spherical format with a yellow/orange color scheme.
+
+## Features
+
+- 3D spherical visualization of WISPR FITS images
+- Time-series animation of multiple WISPR observations
+- Custom color mapping (yellow/orange)
+- Automatic data normalization and smoothing
+- Support for multiple FITS files
 
 ## Requirements
 
-- Python 3.7 or higher
-- Required packages listed in `requirements.txt`
+- Python 3.x
+- Required packages (see requirements.txt):
+  - numpy
+  - astropy
+  - matplotlib
+  - scipy
+  - imageio
+  - scikit-image
 
 ## Installation
 
-1. Clone this repository
+1. Clone this repository:
+```bash
+git clone https://github.com/JRDienes/wispr_3d_project.git
+cd wispr_3d_project
+```
+
 2. Install the required packages:
 ```bash
 pip install -r requirements.txt
@@ -17,28 +36,22 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Place your WISPR FITS image in the project directory
-2. Edit the `wispr_3d_visualization.py` file to update the `fits_file` path to point to your FITS image
-3. Run the script:
+1. Place your WISPR FITS files in the `wispr_data` directory
+2. Run the visualization script:
 ```bash
 python wispr_3d_visualization.py
 ```
 
-The script will create a 3D rotating visualization of your WISPR image and save it as a GIF in the `output` directory.
-
-## Features
-
-- Loads FITS format images
-- Creates a 3D surface plot of the image data
-- Generates a smooth rotating animation
-- Saves the result as a color GIF
-- Applies Gaussian smoothing for better visualization
-- Normalizes the data for optimal display
+The script will generate a GIF animation in the `output` directory.
 
 ## Output
 
-The script will create a GIF file named `wispr_3d_visualization.gif` in the `output` directory. The visualization includes:
-- A 3D surface plot where the height represents the intensity of the image
-- A full 360-degree rotation
-- Color mapping using the 'viridis' colormap
-- Smooth animation with 180 frames 
+The script generates a GIF file (`wispr_time_series_visualization.gif`) in the `output` directory that shows the time evolution of the WISPR data in a 3D spherical format.
+
+## Data Source
+
+The WISPR images are from NASA's Parker Solar Probe mission. The FITS files contain the raw image data from the WISPR instrument.
+
+## License
+
+This project is open source and available under the MIT License. 
